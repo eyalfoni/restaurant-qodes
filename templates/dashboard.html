@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery=True %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div>Hi {{ user.email }}!</div>
+        <div>
+            <h2>Print once, manage forever.</h2>
+        </div>
+        <div>
+            {% buttons %}
+                <a class="btn btn-primary" href="{% url 'create_qr'%}">Make New QR Code</a>
+            {% endbuttons %}
+        <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">Link</th>
+                <th scope="col">QR Image (click to expand)</th>
+                <th scope="col">Edit</th>
+                </tr>
+                </thead>
+            <tbody>
+            {% for qrcode in qrcodes %}
+                <tr>
+                    <td>{{qrcode.forwarding_url}}</td>
+                    <td>
+                        <a href="{{qrcode.qr_code_img}}" target="_blank">
+                            <img src="{{qrcode.qr_code_img}}" width="120" height="120">
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-primary" href="{% url 'edit_qr' qrcode_id=qrcode.id%}">Change Link</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    {% else %}
+        <div>
+            <h3>Get your FREE QR-Codes for your restaurant right now!</h3>
+            <h3>Print once, manage forever!</h3>
+        </div>
+    {% endif %}
+{% endblock %}

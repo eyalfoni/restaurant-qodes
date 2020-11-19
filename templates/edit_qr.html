@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery=True %}
+{% block title %}Make a New QR Code{% endblock %}
+
+{% block content %}
+  <h2>Edit QR Code</h2>
+  <div>
+    Current Link: {{ qr.forwarding_url }}
+  </div>
+  <form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+        <button type="submit" class="btn btn-primary">Continue</button>
+    {% endbuttons %}
+  </form>
+    {% buttons %}
+        <a class="btn btn-secondary" href="{% url 'home'%}">Back</a>
+    {% endbuttons %}
+{% endblock %}
